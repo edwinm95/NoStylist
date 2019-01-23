@@ -1,0 +1,79 @@
+.facebook{
+    background-color: #3b5998;
+    color: white;
+    padding: 14px 28px;
+    width: 100%;
+    font-size: 16px;
+    cursor: pointer;
+}
+.facebook:hover{
+    background-color: #4e71ba;
+}
+.google{
+    background-color: #DB4437;
+    color: white;
+    padding: 14px 28px;
+    font-size: 16px;
+    width: 100%;
+    cursor: pointer;
+}
+.google:hover{
+    background-color: #ef5350;
+}
+.signupbutton{
+    background-color: #1CB94E;
+    color: white;
+    padding: 14px 28px;
+    width: 90%;
+    font-size: 16px;
+    cursor: pointer;
+    margin-bottom: 30px;
+}
+.signupbutton:hover{
+    background-color: #49C771;
+}
+.socialsignupbutton{
+    margin: 30px 30px;
+    border-bottom: 1px solid #eee;
+    border-top: 1px solid #eee;
+}
+.socialsignupbutton button{
+    margin: 10px;
+}
+input[type] {
+    width: 100%;
+    border: 1px solid #aaa;
+    margin: 8px 0;
+    outline: none;
+    padding: 8px;
+    box-sizing: border-box;
+  }
+  
+  input[type]:focus {
+    border-color: dodgerBlue;
+  }
+  .userinput{
+    text-align: left;
+    font-weight: bold;
+    margin: 30px;
+  }
+  .main-container {
+    float: left;
+    position: relative;
+    left: 50%;
+  }
+  .fixer-container {
+    float: left;
+    position: relative;
+    left: -50%;
+    margin: 60px;
+  }
+  .mainstyle{
+    text-align: center;
+    border: 1px solid #aaa;
+  }
+  .loginstyle{
+    margin: 30px 30px;
+    text-align: center;
+    padding: 14px;
+  }

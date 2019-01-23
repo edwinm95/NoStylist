@@ -1,0 +1,38 @@
+@font-face { 
+    font-family: Octuple; src: url('Octuple-max-demo.ttf');
+ } 
+.navbar{
+    font-family: 'Source Sans Pro', sans-serif;
+    background: #EEEEEE;
+    height: 40px;
+    color: black;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+.logo{
+    font-family: Octuple;
+    font-size: 25px;
+    text-decoration: none;
+    color:black;
+}
+.logo :hover{
+    color:yellow;
+}
+.navbar a {
+    text-align: center;
+    font-weight: bold;
+    margin: 10px;
+}
+.signinlink {
+    float: right;
+    color: black;
+    text-decoration: none;
+    
+}
+.signuplink{
+    float: right;
+    color: black;
+    text-decoration: none;
+}
