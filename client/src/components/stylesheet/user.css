@@ -1,0 +1,30 @@
+.user{
+    border-bottom: 0.5px solid rgb(180, 180, 180);
+}
+.avatar img{
+    height: 100px; 
+    margin-top: 30px;
+}
+.userinfo i {
+    color: gold;
+}
+.reviews{
+    display: inline-block;
+    margin: 10px;
+}
+.userinfo{
+    display: inline-block;
+    line-height: 0.3;
+    margin-top: 30px;
+}
+.followbutton{
+    display: inline-block;
+    margin-top: 35px;
+
+}
+.followbutton a {
+    background-color: #1CB94E;
+}
+.followbutton a:hover {
+    background-color: #49C771;
+}

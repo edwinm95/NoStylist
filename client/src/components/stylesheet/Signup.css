@@ -1,0 +1,79 @@
+.waves-effect.waves-light.facebook{
+    background-color: #3b5998;
+    color: white;
+    font-size: 16px;
+    width: 100%;
+    margin: 8px 0;
+    cursor: pointer;
+    text-transform: none;
+}
+.waves-effect.waves-light.facebook:hover{
+    background-color: #547bce;
+}
+.waves-effect.waves-light.google{
+    background-color: #DB4437;
+    color: white;
+    font-size: 16px;
+    width: 100%;
+    margin: 8px 0;
+    cursor: pointer;
+    text-transform: none;
+}
+.waves-effect.waves-light.google:hover{
+    background-color: #ef5350;
+}
+.fab.fa-facebook-f.facebookicon{
+    font-size: 16px;
+    margin-right: 5px;
+}
+.fab.fa-google.googleicon{
+    font-size: 16px;
+    margin-right: 5px;
+}
+.waves-effect.waves-light.signupbutton{
+    background-color: #1CB94E;
+    color: white;
+    font-size: 16px;
+    padding-bottom: 30px;
+    width: 100%;
+    cursor: pointer;
+    text-transform: none;
+    margin: 8px 0;
+}
+.waves-effect.waves-light.signupbutton:hover{
+    background-color: #49C771;
+}
+.socialsignupbutton{
+    margin: 30px 30px;
+    border-bottom: 1px solid #eee;
+    border-top: 1px solid #eee;
+}
+.signupbuttoncontainer{
+    margin: 30px 30px;
+}
+input[type] {
+    width: 100%;
+    border: 1px solid #aaa;
+    margin: 8px 0;
+    outline: none;
+    padding: 8px;
+    box-sizing: border-box;
+  }
+  
+  input[type]:focus {
+    border-color: dodgerBlue;
+  }
+  .userinput{
+    text-align: left;
+    font-weight: bold;
+    margin: 30px;
+  }
+  .mainstyle{
+    text-align: center;
+    border: 1px solid #aaa;
+  }
+  .loginstyle{
+    margin: 30px 30px;
+    text-align: center;
+    padding: 14px;
+  }
