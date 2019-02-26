@@ -3,17 +3,19 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const mongoosse = require('mongoose');
+require('./models/Reviews');
+require('./models/User');
 const passport = require('passport')
 const cookieSession = require('cookie-session')
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var authRoutes = require('./routes/auth')
 var bodyParser = require('body-parser')
-const mongoosse = require('mongoose');
 const keys = require('./config/keys')
 const cors = require('cors');
 const apiRoute = require('./routes/api')
-require('./models/User')
+
 
 mongoosse.connect(keys.mongoURI, { useNewUrlParser: true })
 
@@ -27,13 +29,6 @@ app.use(
     }
   )
 )
-const corsOption = {
-    origin: true,
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    credentials: true,
-    exposedHeaders: ['x-auth-token']
-}
-app.use(cors({origin: "http://localhost:3000"}));
 require('./services/passport');
 app.use(passport.initialize());
 app.use(passport.session());
@@ -50,7 +45,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/auth',authRoutes)
-// app.use('/api' , passport.authenticate('jwt', { session: false }),apiRoute)
 app.use('/api' ,apiRoute)
 
 // catch 404 and forward to error handler

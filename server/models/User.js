@@ -6,7 +6,7 @@ const userSchema = new Schema (
         google:{
             type:{
                 id: String,
-                token: String
+                unique: true
             },
             select: false
         },
@@ -33,9 +33,14 @@ const userSchema = new Schema (
         facebook:{
             type:{
                 id: String,
-                token: String
+                unique: true
             },
             select: false
+        },
+
+        createdAt:{
+            type: Date,
+            default: Date.now
         }
         
         }

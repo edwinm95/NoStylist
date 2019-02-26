@@ -1,48 +1,132 @@
 import React,{Component} from  'react'
-import {Link} from 'react-router-dom'
+import {Link, Redirect} from 'react-router-dom'
 import {GoogleLogin} from 'react-google-login'
 import FacebookLogin from 'react-facebook-login'
 import Authentication from '../Layout/Authentication'
 import {connect} from 'react-redux'
 import * as actions from '../../actions'
+import axios from 'axios'
+import MyInput from '../Forms/MyInput'
+import Formsy from 'formsy-react'
 class SignUp extends Component {
     constructor(props){
         super(props);
         this.state = {
-            showForm: true,
-            socialid: '',
+           showAuthenticationForm: false,
+           socialid: '',
            socialemail: '',
            socialname: '',
            social :'',
-           socialToken: ''
+           socialToken: '',
+           success: false,
+           nameisEmpty: false,
+           usernameisEmpty: false,
+           emailisEmpty: false,
+           passwordisEmpty: false
 
         }
         this.renderSignUpForm = this.renderSignUpForm.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
     
-    googleResponse = (response) => {
+    googleResponse = async (response) => {
         this.setState({
-            showForm: false,
             social: 'Google',
             socialid: response.profileObj.googleId,
             socialemail: response.profileObj.email,
             socialname: response.profileObj.givenName,
             socialToken: response.accessToken
         })
+        try{
+            const params = {
+                id: this.state.socialid,
+                username: this.state.socialid,
+                password: this.state.socialid,
+            }
+            const response = await axios.post('/auth/google',params)
+            const userSuccessfullyLoggedin = response.data.success; 
+            if(userSuccessfullyLoggedin === true){
+                this.props.fetchUser();
+                this.setState({success: true})
+            }else{
+                this.setState({showAuthenticationForm: true})
+            }
+        }catch(error){
+        console.log(error);
+    }
     };
-    facebookResponse = (response) => {
+    redirectToHome(){
+        if(this.state.success === true){
+            return (
+                <div>
+                    <Redirect to='/'/>
+                </div>
+            );
+        }
+    }
+    facebookResponse = async (response) => {
         this.setState({
-            showForm: false,
             social: 'Facebook',
             socialid: response.id,
             socialemail:  response.email,
             socialname: response.name,
             socialToken: response.accessToken
         })
+        const params = {
+            id: this.state.socialid,
+            username: this.state.socialid,
+            password: this.state.socialid,
+        }
+        try{
+            const response = await axios.post('/auth/facebook',params)
+            const userSuccessfullyLoggedin = response.data.success; 
+            if(userSuccessfullyLoggedin === true){
+                this.props.fetchUser();
+                this.setState({success: true})
+            }else{
+                this.setState({showAuthenticationForm: true})
+            }
+        }catch(error){
+            console.log(error)
+        }
+    }
+    handleSubmit = async(values) => {
+        console.log(values);
+        const {username, email, password, name} = values
+        try{
+            if(username === '' || username === undefined){
+                this.setState({
+                    usernameisEmpty: true
+                })
+            }
+            if(name === '' || name === undefined){
+                this.setState({
+                    nameisEmpty: true
+                })
+            }
+            if(email === '' || email === undefined){
+                this.setState({
+                    emailisEmpty: true
+                })
+            }
+            if(password === '' || password === undefined){
+                this.setState({
+                    passwordisEmpty: true
+                })
+            }
+            // if(!this.state.nameisEmpty && !this.state.emailisEmpty && !this.state.passwordisEmpty && !this.state.usernameisEmpty){
+            //     const response = await axios.post('/auth/signup',values)
+            //     console.log(response);
+            // }
+
+        }catch(error){
+            console.log(error)
+        }
     }
     renderSignUpForm(){
         const facebook = this.props.facebook;
         const google = this.props.google;
+        const usernameEmpty = this.state.usernameisEmpty
         const main = {
             textAlign: 'center',
             borderStyle: 'solid',
@@ -87,21 +171,21 @@ class SignUp extends Component {
                                         onFailure={this.googleResponse}
                                     />
                                     </div>
-                                    <form action="/auth/signup" method="post">
+                                    <Formsy onValidSubmit={this.handleSubmit}>
                                     <div className = "userinput">
                                         First and Last Name<br/>
-                                        <input name = 'name' type='text'></input><br/>
+                                        <MyInput name = 'name' type='text' validations="isUndefined" validationError="Please enter a name" ></MyInput><br/>
                                         Username<br/>
-                                        <input name = 'username' type='text'></input><br/>
+                                        <MyInput name = 'username' type='text' validations="isEmptyString" validationError="Please enter a username" ></MyInput><br/>
                                         Email Address<br/>
-                                        <input name = 'email'type='email'></input><br/>
+                                        <MyInput name = 'email'type='email' validations="isEmail" validationError="This is not a valid email"></MyInput><br/>
                                         Password<br/>
-                                        <input name= 'password' type='password'></input><br/>
+                                        <MyInput name= 'password' type='password' validations="isEmptyString" validationError="Please enter a password" ></MyInput><br/>
                                     </div>
                                     <div className = "signupbuttoncontainer">
                                         <input type="submit" className="waves-effect waves-light btn signupbutton" value = "Sign Up" />
                                     </div>
-                                    </form>
+                                    </Formsy>
                                 </div>
                                 <div className = "loginstyle">
                                     Already a member?<Link to={"/Signin"} > Sign in</Link>
@@ -117,10 +201,12 @@ class SignUp extends Component {
         }
     }
     render(){
-        if(this.state.showForm === true){
+        if(this.state.showAuthenticationForm === false){
+            console.log(this.state)
             return(
                 <div>
                 {this.renderSignUpForm()}
+                {this.redirectToHome()}
                 </div>
             )
         }else{
@@ -131,10 +217,9 @@ class SignUp extends Component {
                 email: this.state.socialemail,
                 token: this.state.socialToken
             }
-            this.props.addParams(props)
             return(
                 <div>
-                    <Authentication />
+                    <Authentication {...props}/>
                 </div>
             )
         }

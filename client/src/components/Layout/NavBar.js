@@ -16,9 +16,9 @@ class NavBar extends Component {
                 return(
                     <div>
                         <ul id="nav-mobile" className="right hide-on-med-and-down">
-                            <li><a>SHOP</a></li>
-                            <li><NavLink  to={"/Signin"} >SIGN IN</NavLink></li>
-                            <li><NavLink   to={"/SignUp"} >SIGN UP</NavLink></li>
+                            <li><a>Shop</a></li>
+                            <li><NavLink  to={"/Signin"} >Sign In</NavLink></li>
+                            <li><NavLink   to={"/SignUp"} >Sign Up</NavLink></li>
                             <li><a href="#"><i className="far fa-search icon"></i></a></li>
                         </ul>
                     </div>
@@ -29,7 +29,7 @@ class NavBar extends Component {
             return(
                 <div>
                     <ul id="nav-mobile" className="right hide-on-med-and-down">
-                        <li><a>FITS</a></li>
+                        <li><a>Shop</a></li>
                         <li><NavLink to={"/user"}>My Account</NavLink></li>
                         <li><a href='/api/logout'>Log Out</a></li>
                         <li><a href="#"><i className="far fa-search icon"></i></a></li>

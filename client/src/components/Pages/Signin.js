@@ -171,10 +171,9 @@ class Signin extends React.Component{
                     email: this.state.socialemail,
                     socialToken: this.state.socialToken
                 }
-                this.props.addParams(props)
                 return(
                     <div>
-                        <Authentication  />
+                        <Authentication  {...props}/>
                     </div>
                 )
             }

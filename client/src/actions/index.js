@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {FETCH_USER, GOOGLE_CLIENT_ID, FACEBOOK_CLIENT_ID, ADD_ERROR , REMOVE_ERROR, ADD_PARAMS, REMOVE_PARAMS} from './types'
+import {FETCH_USER, GOOGLE_CLIENT_ID, FACEBOOK_CLIENT_ID, ADD_ERROR , REMOVE_ERROR} from './types'
 
 export const fetchUser = () => async dispatch => { 
         const response = await axios.get('/api/current_user')
@@ -20,12 +20,4 @@ export const addError = (error) => async dispatch => {
 }
 export const removeError = () => async dispatch => {
         dispatch({type: REMOVE_ERROR});
-}
-
-export const addParams = (params) =>  dispatch => {
-        dispatch({type: ADD_PARAMS, payload: params})
-}
-
-export const removeParams = () => dispatch => {
-        dispatch({type: REMOVE_PARAMS})
 }

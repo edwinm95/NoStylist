@@ -15,6 +15,7 @@
     "debug": "~2.6.9",
     "express": "~4.16.0",
     "express-server-utils": "^1.1.0",
+    "express-validator": "^5.3.1",
     "http-errors": "~1.6.2",
     "jade": "~1.11.0",
     "jsonwebtoken": "^8.4.0",
