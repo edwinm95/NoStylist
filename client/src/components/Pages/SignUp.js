@@ -8,6 +8,7 @@ import * as actions from '../../actions'
 import axios from 'axios'
 import MyInput from '../Forms/MyInput'
 import Formsy from 'formsy-react'
+import keys from '../../config/keys';
 class SignUp extends Component {
     constructor(props){
         super(props);
@@ -137,7 +138,6 @@ class SignUp extends Component {
             textAlign: 'center',
             fontSize: '32px'
         }
-        if(google && facebook){
             return(
                 <div>
                 <div className="row">
@@ -152,7 +152,7 @@ class SignUp extends Component {
                                     <h1 style={headStyle}>Join No-Stylist Community</h1>
                                     <div className = "socialsignupbutton">
                                     <FacebookLogin
-                                            appId={facebook}
+                                            appId={keys.facebookClientID}
                                             autoLoad={false}
                                             callback={this.facebookResponse}
                                             textButton="Sign Up with Facebook"
@@ -161,7 +161,7 @@ class SignUp extends Component {
                                             icon="fab fa-facebook-f facebookicon"
                                         />
                                     <GoogleLogin
-                                        clientId={google}
+                                        clientId={keys.googleClientID}
                                         render={renderProps => (
                                             <button onClick={renderProps.onClick} className="waves-effect waves-light btn google">
                                             <i class="fab fa-google googleicon"></i>Sign Up with Google</button>
@@ -198,7 +198,6 @@ class SignUp extends Component {
                 </div>
             </div>
             );
-        }
     }
     render(){
         if(this.state.showAuthenticationForm === false){
@@ -225,8 +224,5 @@ class SignUp extends Component {
         }
     }
 }
-const mapStateToProps = (state) =>{
-    return {google: state.google, facebook: state.facebook}
-}
 
-export default connect(mapStateToProps,actions)(SignUp)
+export default connect(null,actions)(SignUp)

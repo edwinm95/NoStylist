@@ -4,7 +4,7 @@ const messageRefernceSchema = new Schema({
     mesage_id:{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'messages',
-        type: required
+        required: true
     },
     from:{
         type: mongoose.Schema.Types.ObjectId,

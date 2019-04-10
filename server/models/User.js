@@ -41,7 +41,21 @@ const userSchema = new Schema (
         createdAt:{
             type: Date,
             default: Date.now
-        }
+        },
+        reviews:[{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'reviews'
+
+        }],
+        followers:[
+            {type: mongoose.Schema.Types.ObjectId,
+            ref: 'users'}
+        ],
+        items:[{
+            type: mongoose.Schema.Types.Number,
+            ref: 'items'
+            }
+        ]
         
         }
 )

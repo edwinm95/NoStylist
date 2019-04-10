@@ -4,13 +4,26 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const mongoosse = require('mongoose');
-require('./models/Reviews');
+const fileUpload = require('express-fileupload')
 require('./models/User');
+require('./models/Reviews');
+require('./models/Items')
+require('./models/Categories')
+require('./models/Message')
+require('./models/MessageReference')
+require('./models/SubCategories')
+require('./models/Types')
+require('./models/Sizes')
 const passport = require('passport')
 const cookieSession = require('cookie-session')
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var paypalRoutes = require('./routes/paypal')
 var authRoutes = require('./routes/auth')
+var reviewsRoutes = require('./routes/reviews')
+var CategoriesRoutes = require('./routes/categories')
+var itemRoutes = require('./routes/items')
+var sizesRoutes = require('./routes/sizes')
 var bodyParser = require('body-parser')
 const keys = require('./config/keys')
 const cors = require('cors');
@@ -37,6 +50,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
 app.use(logger('dev'));
+app.use(cors())
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -46,7 +60,14 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/auth',authRoutes)
 app.use('/api' ,apiRoute)
+app.use('/review',reviewsRoutes)
+app.use('/items',itemRoutes)
+app.use('/sizes',sizesRoutes)
+app.use('/paypal',paypalRoutes)
+app.use('/user',usersRouter)
+app.use('/categories',CategoriesRoutes)
 
+app.use(fileUpload())
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

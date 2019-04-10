@@ -9,7 +9,7 @@ const itemSchema = new Schema({
         type: String,
         required: true
     },
-    brand:{
+    designer:{
         type: String,
         required: true
     },
@@ -25,7 +25,7 @@ const itemSchema = new Schema({
         type: Number,
         required: true
     },
-    location:{
+    shippinglocation:{
         type: String,
         required: true
     },
@@ -38,17 +38,40 @@ const itemSchema = new Schema({
         ref: 'user',
         required: true
     },
+    paypal:{
+        type: String,
+        required: true
+    },
     shipping:{
         type:Number,
         required: true
     },
     likes:{
         type: Number,
-        required: true
+        default: 0
     },
     createdAt:{
         type: Date,
         default: Date.now
+    },
+    photo1:{
+        type: String,
+        required: true
+    },
+    photo2:{
+        type: String,
+    },
+    photo3:{
+        type: String,
+    },
+    photo4:{
+        type: String,
+    },
+    photo5:{
+        type: String,
+    },
+    photo6:{
+        type: String,
     }
 
 })

@@ -9,11 +9,13 @@ import SignUp from './Pages/SignUp';
 import Home from './Pages/Home';
 import Signin from './Pages/Signin'
 import edit from './Pages/edit'
+import Sell from './Pages/Sell'
+import Listing from './Pages/Listing'
+import Types from './Pages/addTypes'
+import Sizes from './Pages/addSizes'
 class App extends Component {
     componentDidMount(){
         this.props.fetchUser();
-        this.props.fetchGoogleClientID();
-        this.props.fetchFacebookClientID();
     }
     render(){
         return (
@@ -26,6 +28,11 @@ class App extends Component {
                         <Route path = "/signin" component={Signin}/>
                         <Route path = "/signin/:error" component={Signin}/>
                         <Route path = "/user" component={user}/>
+                        <Route path = "/sell" component={Sell}/>
+                        <Route path = "/listing/:id/:name" component={Listing} />
+                        <Route path = "/listing/:id"  exact component={Listing} />
+                        <Route path = "/addtypes" exact component={Types} />
+                        <Route path = "/addsizes" exact component={Sizes} />
                     </div>
                 </Router>
         );

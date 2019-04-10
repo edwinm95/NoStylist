@@ -4,6 +4,7 @@ import '../stylesheet/NavBar.css'
 import { connect } from 'react-redux'
 import * as actions from '../../actions'
 
+
 class NavBar extends Component {
     constructor(props){
         super(props);
@@ -30,6 +31,7 @@ class NavBar extends Component {
                 <div>
                     <ul id="nav-mobile" className="right hide-on-med-and-down">
                         <li><a>Shop</a></li>
+                        <li><NavLink to={"/sell"}>Sell</NavLink></li>
                         <li><NavLink to={"/user"}>My Account</NavLink></li>
                         <li><a href='/api/logout'>Log Out</a></li>
                         <li><a href="#"><i className="far fa-search icon"></i></a></li>

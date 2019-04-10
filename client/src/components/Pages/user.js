@@ -3,21 +3,39 @@ import '../stylesheet/user.css'
 import Avatar from '../stylesheet/avatar_img.jpg'
 import edit from './edit'
 import { connect } from 'react-redux'
+import {Link, Redirect} from 'react-router-dom'
+import * as actions from '../../actions'
+import axios from 'axios'
 class user extends Component {
   constructor(props){
     super(props);
-    this.state = {edit: edit, showEditComponent: false}
+    this.state = {edit: edit,
+                  showEditComponent: false,
+                  reviewCount: 0}
     this.editProfile = this.editProfile.bind(this);
+    this.fetchReviews = this.fetchReviews.bind(this);
   }
   editProfile(){
     this.setState({
       showEditComponent: !this.state.showEditComponent
     })
   }
+  componentWillMount(){
+    this.fetchReviews();
+  }
+  async fetchReviews(){
+    try{
+      const response = await axios.get("/review/count");
+      this.setState({
+        reviewCount: response.data.count
+      })
+    }catch(error){
+    }
+  }
     renderContent(){
       switch(this.props.auth){
         case false:
-        return;
+        return (<Redirect to="/" />);
         case null:
         return;
         default:
@@ -39,7 +57,7 @@ class user extends Component {
                     <i class="fas fa-star"></i>
                     <i class="fas fa-star"></i>
                     <i class="fas fa-star"></i>
-                    <a href="#" className="reviews">(11)</a>
+                    <a href="#" className="reviews">({this.state.reviewCount})</a>
                     <p>United States</p>
                   </div>
                 </div>
@@ -68,4 +86,4 @@ const mapStateToProps = (state) => {
   return { auth : state.auth };
 }
 
-export default connect(mapStateToProps)(user);
+export default connect(mapStateToProps,actions)(user);

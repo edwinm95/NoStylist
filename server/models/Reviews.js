@@ -1,8 +1,9 @@
 const mongoose = require('mongoose');
 const {Schema} = mongoose;
+const User = mongoose.model('users')
 const reviewSchema = new Schema (
     {
-        userid:{
+        user:{
             type: mongoose.Schema.Types.ObjectId,
             ref: 'users',
             required: true,
@@ -33,5 +34,15 @@ const reviewSchema = new Schema (
 )
 reviewSchema.set('toJSON', {getters: true, virtuals: true})
 
+reviewSchema.statics.findByUsername = function (username, callback) {
+    var query = this.findOne()
+  
+    User.findOne({'username': username}, function (error, user) {
+      query.where(
+        {user: user._id}
+      ).exec(callback);
+    })
+    return query
+  }
 
 mongoose.model('reviews',reviewSchema)

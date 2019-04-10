@@ -28,8 +28,12 @@ class MyInput extends React.Component {
         <input
           onChange={this.changeValue}
           name={this.props.name}
+          id={this.props.id || ''}
           type={this.props.type || 'text'}
           value={this.props.getValue() || ''}
+          className={this.props.className || 'browser-default'}
+          accept={this.props.accept}
+          placeholder={this.props.placeholder}
         />
         <span style={errorStyle}>{errorMessage}</span>
       </div>

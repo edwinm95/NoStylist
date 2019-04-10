@@ -6,6 +6,7 @@ import FacebookLogin from 'react-facebook-login'
 import Authentication from '../Layout/Authentication'
 import axios from 'axios'
 import * as actions from '../../actions'
+import keys  from '../../config/keys'
 class Signin extends React.Component{
 
     constructor(props){
@@ -88,46 +89,44 @@ class Signin extends React.Component{
     }
 
     renderLoginForm(){
-        const facebook = this.props.facebook;
-        const google = this.props.google;
         const headStyle = {
             textAlign: 'center',
             fontSize: '32px'
         }
-        if(google && facebook){
-                return(
-                    <div>
+            return(
+                <div>
                     <div className="row">
                     </div>
                     <div class="row">
                         <div class="col s4">
-                        </div>
-                         <div class="col s4">
+                         </div>
+                        <div class="col s4">
                             <div className="main-container">
                                 <div className="fixer-container">
                                     <div className="mainstyle">
                                         <h1 style={headStyle}>Login to No-Stylist</h1>
                                         <div className = "socialsignupbutton">
-                                        <FacebookLogin
-                                            appId={facebook}
-                                            autoLoad={false}
-                                            callback={this.facebookResponse}
-                                            fields="name,email"
-                                            cssClass="waves-effect waves-light btn facebook"
-                                            icon="fab fa-facebook-f facebookicon"
-                                        />
-    
-                                        <GoogleLogin
-                                            clientId={google}
-                                            render={renderProps => (
-                                                <button onClick={renderProps.onClick} className="waves-effect waves-light btn google">
-                                                <i class="fab fa-google googleicon"></i>Login with Google</button>
-                                                )}
-                                            onSuccess={this.googleResponse}
-                                            onFailure={this.googleResponse}
-                                        />
-                                            
-                                    <div class="g-signin2" data-onsuccess="onSignIn"></div>
+                                            <FacebookLogin
+                                                appId={keys.facebookClientID}
+                                                autoLoad={false}
+                                                callback={this.facebookResponse}
+                                                fields="name,email"
+                                                cssClass="waves-effect waves-light btn facebook"
+                                                icon="fab fa-facebook-f facebookicon"
+                                            />
+
+                                            <GoogleLogin
+                                                clientId={keys.googleClientID}
+                                                render={renderProps => (
+                                                    <button onClick={renderProps.onClick} className="waves-effect waves-light btn google">
+                                                    <i class="fab fa-google googleicon"></i>Login with Google</button>
+                                                    )}
+                                                onSuccess={this.googleResponse}
+                                                onFailure={this.googleResponse}
+                                            />
+                                        
+                                            <div class="g-signin2" data-onsuccess="onSignIn">
+                                            </div>
                                         </div>
                                         <form action="/auth/login" method="post">
                                             <div className = "userinput">
@@ -139,20 +138,19 @@ class Signin extends React.Component{
                                             <div className = "signupbuttoncontainer">
                                                 <input type="submit" className="waves-effect waves-light btn signupbutton" value = "Sign In" />
                                             </div>
-                                </form>
+                                        </form>
                                     </div>
                                     <div className = "loginstyle">
                                         No account? <Link to={"/SignUp"} >Sign up</Link>
                                     </div>
                                 </div>
                             </div>
-                        <div class="col s4">
-                        </div>
-                    </div>    
+                            <div class="col s4">
+                            </div>
+                        </div>    
+                    </div>
                 </div>
-                </div>
-                );
-        }
+            );
     }
 
     render(){
@@ -183,10 +181,5 @@ class Signin extends React.Component{
 
         
 }
-const mapStateToProps = (state) =>{
-    return { google: state.google,
-             facebook: state.facebook 
-            };
-}
 
-export default connect(mapStateToProps,actions)(Signin)
+export default connect(null,actions)(Signin)
