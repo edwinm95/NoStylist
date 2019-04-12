@@ -9,4 +9,5 @@ module.exports = function(app) {
     app.use(proxy ("/user/*", {target: 'http://localhost:5000'}))
     app.use(proxy ("/categories/*", {target: 'http://localhost:5000'}))
     app.use(proxy ("/sizes/*", { target: 'http://localhost:5000'}))
+    app.use(proxy ("/designers/*", { target: 'http://localhost:5000'}))
 }

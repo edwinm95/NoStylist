@@ -13,7 +13,12 @@ const sizesSchema = new Schema({
             ref: 'subcategories'
         }
     ]
-
-
 })
+sizesSchema.statics.findBySubCategoryID =  function(id,callback){
+    var query = this.find()
+    SubCategory.findById(id, function(error,sub){
+        query.where({subcategories: sub._id}).exec(callback);
+    })
+    return query;
+}
 mongoose.model('sizes',sizesSchema)

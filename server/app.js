@@ -14,10 +14,13 @@ require('./models/MessageReference')
 require('./models/SubCategories')
 require('./models/Types')
 require('./models/Sizes')
+require('./models/Designer')
+require('./models/Conditions')
 const passport = require('passport')
 const cookieSession = require('cookie-session')
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var designerRoutes = require('./routes/designers')
 var paypalRoutes = require('./routes/paypal')
 var authRoutes = require('./routes/auth')
 var reviewsRoutes = require('./routes/reviews')
@@ -66,6 +69,7 @@ app.use('/sizes',sizesRoutes)
 app.use('/paypal',paypalRoutes)
 app.use('/user',usersRouter)
 app.use('/categories',CategoriesRoutes)
+app.use('/designers',designerRoutes)
 
 app.use(fileUpload())
 // catch 404 and forward to error handler

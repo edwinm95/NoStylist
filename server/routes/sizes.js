@@ -21,5 +21,15 @@ router.post('/addSize', async function(req,res){
     res.send('Success')
 
 })
+router.post('/getsize', function(req,res){
+    console.log(req.body)
+    const {id} = req.body;
+    Size.findBySubCategoryID(id, function(err,sizes){
+        if(err)
+            res.send(err)
+        res.send(sizes)
+    })
+
+})
 
 module.exports = router;

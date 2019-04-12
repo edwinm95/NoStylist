@@ -15,9 +15,35 @@
 .fieldTitle{
     font-size: 25px;
 }
+.browser-default.autocomplete{
+    margin-top: 8px;
+    margin-bottom: 0px;
+}
+.autofillcomponent{
+    margin-bottom: 8px;
+}
 .fieldTextBox{
     width: 100%;
-
+}
+.suggestions{
+    border: 1px solid #ccc;
+    background-color: white;
+    margin: 0 0;
+}
+.suggestions li{
+    padding: 8px;
+}
+.suggestions li:hover{
+    cursor: pointer;
+    background-color: #ccc;
+    font-weight: 500;
+}
+.desctextarea{
+    min-height: 200px;
+    background-color: white;
+    padding: 20px;
+    cursor: pointer;
+    margin: 10px 0px;
 }
 .fieldTextBox input{
     height: 10%;
@@ -43,6 +69,15 @@
     background-color: white;
     cursor: pointer;
 }
+.sizedropdown{
+    width: 50%;
+    outline: none;
+    margin-top: 8px;
+    padding: 8px;
+    box-sizing: border-box;
+    background-color: white;
+    cursor: pointer;
+}
 .placeholdertext {
     text-align: left;
     display: inline;
@@ -58,8 +93,26 @@
     cursor: pointer;
 
 }
+.sizelist{
+    background-color: white;
+    width: 50%;
+    padding: 2px;
+    margin: 0;
+    cursor: pointer;
+}
+.sizelist:hover{
+    font-weight: 600;
+    background-color: #E5E5E5;
+}
 .categorylist:hover{
     font-weight: 600;
+    background-color: #E5E5E5;
+}
+.autocompleteInput{
+    border: 1px solid #999;
+    background-color: white;
+    padding: 0.5rem;
+    width: 300px;
 }
 .subcategories{
     width: 25%;
@@ -77,6 +130,7 @@
 }
 .typelist:hover{
     color: red;
+    font-weight: 600;
     background-color: #E5E5E5;
 }
 tr{
@@ -101,6 +155,23 @@ tr{
 }
 .subcategorylistcomponent{
     margin-bottom: 8px;
+}
+.priceinput{
+    margin: 0;
+}
+.priceinput input{
+    text-align: left;
+    padding-left: 30px;
+}
+.priceinput span{
+    position: relative;
+    top: -40px;
+    left: 5px;
+    font-size: 18px;
+}
+.browser-default.condition{
+    width: 50%;
+    margin: 8px 0;
 }
 .gender{
     background-color: white;

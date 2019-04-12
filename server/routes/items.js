@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 const mongoose = require('mongoose')
 const Item = mongoose.model('items')
+const Condition = mongoose.model('conditions')
 const multer = require('multer')
 const upload = require('../utils/storageMulter');
 const mv = require('mv')
@@ -84,6 +85,12 @@ router.post('/find', async (req,res) => {
    const {id} = req.body
    var item = await Item.findById(id)
    res.send(item)
+})
+
+router.get('/getconditions', async (req,res) => {
+    const condition = await Condition.find()
+    console.log(condition)
+    res.send(condition)
 })
 
 module.exports = router;

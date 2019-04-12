@@ -1,6 +1,8 @@
 import React,{ Component } from 'react'
 import Formsy from 'formsy-react'
 import MyInput from '../Forms/MyInput'
+import MyTextArea from '../Forms/MyTextArea'
+import PriceInput from '../Forms/PriceInput'
 import axios from 'axios'
 import keys from '../../config/keys'
 import PhotoInput from '../Forms/PhotoInput'
@@ -9,8 +11,12 @@ import '../stylesheet/sell.css'
 import qs from 'qs'
 import CategoryDropDown from '../Forms/CategoryDropDown'
 import SubcategoryDropDown from '../Forms/SubcategoryDropDown'
+import SizeDropDown from '../Forms/SizeDropDown'
+import ConditionDropDown from '../Forms/CondtionDropDown'
+import SizeList from '../Forms/SizeList'
 import CategoryList from '../Forms/CategoryList'
 import SubCategoryList from '../Forms/SubCategoryList'
+import AutoComplete from '../Forms/AutoComplete'
 
 class Sell extends Component{
     constructor(props){
@@ -27,6 +33,8 @@ class Sell extends Component{
             subcategories:[],
             mencategories: [],
             womencategories: [],
+            designers: [],
+            conditions: [],
             category: {
                 id: '',
                 name: 'Select Category',
@@ -36,12 +44,21 @@ class Sell extends Component{
                 id: '',
                 name: 'Select Subcategory'
             },
+            size:{
+                id: '',
+                name: 'Select Size'
+            },
             type:{
+                id: '',
+                name: ''
+            },
+            designer:{
                 id: '',
                 name: ''
             },
             showCategoryList: false,
             showSubCategoryList: false,
+            showSize: false,
             categorySelected: false
         }
 
@@ -53,6 +70,18 @@ class Sell extends Component{
         this.getSubCategoryList = this.getSubCategoryList.bind(this);
         this.renderSubCategoryDropdown = this.renderSubCategoryDropdown.bind(this);
         this.getSubCategory = this.getSubCategory.bind(this);
+        this.showSize = this.showSize.bind(this);
+        this.getSize = this.getSize.bind(this);
+        this.getDesigner = this.getDesigner.bind(this);
+        this.renderConditionDropDown = this.renderConditionDropDown.bind(this);
+    }
+    getDesigner(designer){
+        this.setState({
+            designer:{
+                id: designer._id,
+                name: designer.Name
+            }
+        })
     }
     getCategory(data){
         const {id, name, gender} = data
@@ -65,7 +94,11 @@ class Sell extends Component{
         subcategory:{
             id: '',
             name: 'Select Subcategory'
-       }
+       },
+       size:{
+        id: '',
+        name: 'Select Size'
+        }
     })
         this.getSubCategoryList(id)
         this.setState({categorySelected: true})
@@ -79,7 +112,12 @@ class Sell extends Component{
                subcategory:{
                 id: subCategoryID,
                 name: typeName
-           }})
+                },
+                size:{
+                    id: '',
+                    name: 'Select Size'
+                }
+        })
         }else{
             this.setState({
                 showSubCategoryList: false,
@@ -92,6 +130,14 @@ class Sell extends Component{
                    typeName: ''
                }
             })
+        }
+    }
+    showSize(){
+        if(this.state.subcategory.id !== '' ){
+            this.setState({showSize: true})
+        }
+        if(this.state.showSize){
+            this.setState({showSize: !this.state.showSize})
         }
     }
 
@@ -108,6 +154,15 @@ class Sell extends Component{
             )
         }
     }
+    renderConditionDropDown(){
+        if(this.state.conditions.length !== 0){
+            return(
+                <ConditionDropDown condition={this.state.conditions}  />
+            )
+        }else{
+            return(<div></div>)
+        }
+    }
     renderSubCategoryList(){
         if(this.state.showSubCategoryList){
             return(
@@ -118,6 +173,30 @@ class Sell extends Component{
         }else{
             return(
                 <div>
+                </div>
+            )
+        }
+    }
+    getSize(size){
+        console.log(size)
+        this.setState({
+            size:{
+                id: size._id,
+                name: size.name
+            },
+            showSize:false
+        })
+    }
+    renderSize(){
+        if(this.state.showSize){
+            return(
+                <div>
+                    <SizeList subcategoryID={this.state.subcategory.id} getSize={this.getSize} />
+                </div>
+            )
+        }else{
+            return(
+                <div>  
                 </div>
             )
         }
@@ -150,18 +229,26 @@ class Sell extends Component{
         this.setState({subcategories: response.data})
     }
     async componentDidMount(){
-        const response = await axios.get('/categories/getCategory')
-        this.setState({categories: response.data})
+        const categoryResponse = await axios.get('/categories/getCategory')
+        const designerResponse = await axios.get('/designers/all')
+        const conditionResponse = await axios.get('/items/getconditions')
+        this.setState({
+                        categories: categoryResponse.data,
+                        designers: designerResponse.data,
+                        conditions: conditionResponse.data
+                    })
     }
     setShowCategoryList(){
         const status = this.state.showCategoryList
         this.setState({
             showSubCategoryList: false,
+            showSize: false,
             showCategoryList: !status})
     }
     setShowSubCategoryList(){
         const status =  this.state.showSubCategoryList;
         this.setState({showSubCategoryList: !status,
+                        showSize: false,
                        showCategoryList: false})
     }
 
@@ -217,7 +304,6 @@ class Sell extends Component{
         }
     }
     render(){
-        console.log(this.state.subcategory.name)
         return(
             <div>
                 <div className="listing">
@@ -253,9 +339,11 @@ class Sell extends Component{
                                     </div>
                                 </div> 
                                 <div class="col s8">
-                                    <div className="fieldTextBox">
-                                        <MyInput name = 'designer' type='text' placeholder="Enter Designer Name"  />
-                                    </div>
+                                        <div className="autofillcomponent">
+                                            <AutoComplete suggestions={this.state.designers}
+                                            getDesigner={this.getDesigner}
+                                            />
+                                        </div>
                                 </div> 
                     </div>
                     </div>
@@ -274,9 +362,7 @@ class Sell extends Component{
                                 <div className="categorylistcomponent">
                                     {this.renderCategoryList()}
                                 </div>
-                                {this.renderSubCategoryDropdown()}
-
-                            
+                                {this.renderSubCategoryDropdown()}      
                         </div>  
                     </div>
                     </div>
@@ -289,63 +375,66 @@ class Sell extends Component{
                                 </div>
                             </div>
                         <div class="col s8">
-                            <MyInput name = 'size' type='text'  />
+                            <div className="sizedropdown" onClick={this.showSize}>
+                                    <SizeDropDown size={`${this.state.size.name}`} />
+                            </div>
+                            <div className="categorylistcomponent">
+                                {this.renderSize()}
+                            </div>
                         </div>  
                         </div>
                     </div>
-
-                    <div class="row">
-                        <div class="col s2">
-                            <p>Photos</p>
+                    <div className="fields">
+                        <div class="row">
+                            <div class="col s2">
+                                <div className="fieldTitle">
+                                    Condition
+                                </div>
+                            </div>
+                            <div class="col s8">
+                                {this.renderConditionDropDown()}
+                            </div>  
                         </div>
-                        <div class="col s2">
-                            <PhotoInput photo="photo1" callbackFromParent={this.callback}/>
-                        </div>  
                     </div>
 
-                     <div class="row">
-                        <div class="col s2">
-                            <p>Description</p>
+                    <div className="fields">
+                        <div class="row">
+                            <div class="col s2">
+                                <p>Photos</p>
+                            </div>
+                            <div class="col s2">
+                                <PhotoInput photo="photo1" callbackFromParent={this.callback}/>
+                            </div>  
                         </div>
-                        <div class="col s8">
-                            <MyInput name = 'description' type='text'  />
-                        </div>  
                     </div>
 
-                     <div class="row">
-                        <div class="col s2">
-                            <p>Price</p>
+                    <div className="fields">
+                        <div class="row">
+                            <div class="col s2">
+                                <div className="fieldTitle">
+                                    Description
+                                </div>
+                            </div>
+                            <div class="col s8">
+                                <MyTextArea name = 'description'className="desctextarea" placeholder={'Description of the item, condition (required)'}  />
+                            </div>  
                         </div>
-                        <div class="col s8">
-                            <MyInput name = 'price' type='text'  />
-                        </div>  
                     </div>
 
-                     <div class="row">
-                        <div class="col s2">
-                            <p>Shipping Location</p>
+                    <div className="fields">
+                        <div class="row">
+                            <div class="col s2">
+                                <div className="fieldTitle">
+                                    Price
+                                </div>
+                            </div>
+                            <div class="col s8">
+                                Item Price
+                                <PriceInput name="price" placeholder={'Enter Item Price'}/>
+                                Shipping 
+                                <PriceInput name="price" placeholder={'Enter Shipping'}/>
+                            </div>  
                         </div>
-                        <div class="col s8">
-                            <MyInput name = 'shippinglocation' type='text'  />
-                        </div>  
-                    </div>
-
-                     <div class="row">
-                        <div class="col s2">
-                            <p>Shipping Price</p>
-                        </div>
-                        <div class="col s8">
-                            <MyInput name = 'shipping' type='text'  />
-                        </div>  
-                    </div>
-
-                    <div class="row">
-                        <div class="col s2">
-                            <p>Condition</p>
-                        </div>
-                        <div class="col s8">
-                            <MyInput name = 'condition' type='text'  />
-                        </div>  
                     </div>
 
                      <div class="row">
@@ -377,16 +466,3 @@ class Sell extends Component{
 }
 export default Sell
 
-
-
-//       <div className="file-upload">
-//       <div className="image-upload">
-//           <input name = 'file' id='file' type='file' className="inputfile" accept="image/*" onChange={this.handleImageUpload} />
-//           <div className="file-upload-icon">
-//               <i class="far fa-camera-retro"></i>
-//           </div>
-//       </div>
-//       <div className="imageContent">
-//           <img className="image-preview" src ={this.state.photo1}/>
-//       </div>
-//   </div>
