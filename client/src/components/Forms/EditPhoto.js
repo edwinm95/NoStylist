@@ -6,7 +6,9 @@ class EditPhoto extends Component {
       super(props);
       this.state = {
                     open: false,
-                    photo: this.props.photo
+                    photo: this.props.photo,
+                    width: this.props.width,
+                    height: this.props.height
                 }
       this.openModal = this.openModal.bind(this)
       this.closeModal = this.closeModal.bind(this);
@@ -24,20 +26,22 @@ class EditPhoto extends Component {
     this.props.editedPhoto(photo)
   }
   render() {
-    const style={
-        width: '800px',
-        height: '600px'
-    }
+        const padding = this.state.height / 3;
+      const style = {
+        padding:`${padding}px`
+      }
     return (
 
         <div>
-            <div onClick ={this.openModal} className="removeButton">
+            <div onClick={this.openModal} className="removeButton">
+                <div style={style}>
                 <i class="far fa-pencil">
                     <br/>
                     <div className="edittext">
                         Edit
                     </div>
                 </i>
+                </div>
             </div>
             {this.state.open ? 
                 <Modal photo={this.state.photo} closeModal={this.closeModal} editedPhoto={this.getEditedPhoto} /> :

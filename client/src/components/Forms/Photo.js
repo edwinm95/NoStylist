@@ -10,8 +10,15 @@ import EditPhoto from '../Forms/EditPhoto'
              height: this.props.height,
              imageHeight: 0,
              imageWidth: 0,
-             isHovering: true   
+             isHovering: true,
+             imgstyle:{
+                 height: '',
+                 width: '',
+             },
+             imgPadding: ''
          }
+         this.image = React.createRef();
+         this.file = React.createRef();
          this.getImage = this.getImage.bind(this)
          this.getEditPhoto = this.getEditPhoto.bind(this)
          this.handleMouseHover = this.handleMouseHover.bind(this)
@@ -19,33 +26,37 @@ import EditPhoto from '../Forms/EditPhoto'
          this.removePhoto = this.removePhoto.bind(this);
          this.hoverRenderImage = this.hoverRenderImage.bind(this);
          this.renderUploadImage = this.renderUploadImage.bind(this);
+         this.getImageHeightAndWidth = this.getImageHeightAndWidth.bind(this);
+         this.editImage = this.editImage.bind(this);
      }
     getImage(event){
         const photo = URL.createObjectURL(event.target.files[0])
+        this.props.getImage(photo)
+        // this.getImageHeightAndWidth(photo)
+    }
+    getImageHeightAndWidth(photo){
         const image = new Image()
         image.src = photo
-        var height = 0;
-        var width = 0;
         image.onload = () => {
-            height = image.height;
-            width = image.width;
+            const imgstyle = this.editImage(image.height,image.width)
+            this.setState(
+                {
+                    photo: photo,
+                    imageHeight: image.height,
+                    imageWidth: image.width,
+                    imgstyle: {
+                        height: `${imgstyle.height}px`,
+                        width: `${imgstyle.width}px`
+                    },
+                    imgPadding: `${imgstyle.padding}`
+                }
+            )
         }
-        this.setState(
-            {
-                photo: photo,
-                imageHeight: height,
-                imageWidth: width
-            }
-        )
-
     }
     getEditPhoto(photo){
-        this.setState(
-            {
-                photo: photo
-            }
-        )
+        this.getImageHeightAndWidth(photo)
     }
+
     handleMouseHover(){
         this.setState(
             {
@@ -53,27 +64,44 @@ import EditPhoto from '../Forms/EditPhoto'
             }
         )
     }
-    renderImage(){
-        const height = this.state.imageHeight
-        const width = this.state.imageWidth
+    editImage(height,width){
+        const imageHeight = height
+        const imageWidth = width
         var scaledHeight = 0;
         var scaledWidth = 0;
+        var Heightpadding = 0;
+        var Widthpadding = 0;
         if(height > width){
-            const scale = this.state.height/height;
-            scaledHeight = scale * height;
-            scaledWidth = scale * width;
+            const scale = this.state.height/imageHeight;
+            scaledHeight = scale * imageHeight;
+            scaledWidth = scale * imageWidth;
+            Heightpadding = (this.state.width - scaledWidth)/2
         }else{
-            const scale = this.state.width/width;
-            scaledHeight = scale * height;
-            scaledWidth = scale * width;
+            const scale = this.state.width/imageWidth;
+            scaledHeight = scale * imageHeight;
+            scaledWidth = scale * imageWidth;
+            Widthpadding = (this.state.height - scaledHeight)/2
         }
+        var imgstyle = {
+            height: scaledHeight,
+            width: scaledWidth,
+            padding: `${Widthpadding}px ${Heightpadding}px`
+        }
+        return imgstyle
+    }
+    renderImage(){
         const style = {
-            height: `${scaledHeight}px`,
-            width: `${scaledWidth}px`
+            background: '#ccc',
+            textAlign: 'center',
+            fontSize: '30px',
+            width: '100%',
+            height: '100%',
+            padding: this.state.imgPadding
         }
+        console.log(this.state)
         return(
-            <div>
-                 <img ref={this.image} className='image-preview' src={this.state.photo}/>
+            <div style={style}>
+                 <img src={this.state.photo} style={this.state.imgstyle} />
                     {this.hoverRenderImage(this.state.photo)}
             </div>
         )
@@ -91,18 +119,28 @@ import EditPhoto from '../Forms/EditPhoto'
 
     }
     hoverRenderImage(photo){
-        const style = {
-            fontSize: '14px'
-        }
         return(
-            <EditPhoto photo={photo} editedPhoto={this.getEditPhoto} />
+            <EditPhoto width={this.state.width} height={this.state.height} photo={photo} editedPhoto={this.getEditPhoto} />
         )
     }
     renderUploadImage(){
+        const padding = this.state.height / 3;
+        const style = {
+            background: 'white',
+            border: '1px dashed black',
+            textAlign: 'center',
+            fontSize: '30px',
+            width: '100%',
+            height: '100%',
+            cursor: 'pointer'
+        }
+        const iconStyle = {
+            padding: `${padding}px`
+        }
         return(
-            <div>
-                <input class="file-upload-input" type='file' onChange={this.getImage} accept="image/*" /> 
-                <div className="file-upload-icon">
+            <div style={style} onClick={() => this.file.current.click()}>
+                <input class="file-upload-input" type='file' ref={this.file} onChange={this.getImage} accept=".png, ,jpg, .jpeg" /> 
+                <div style={iconStyle}>
                             <i class="far fa-camera-retro"></i>
                 </div>  
             </div>
@@ -111,15 +149,17 @@ import EditPhoto from '../Forms/EditPhoto'
 
     render(){
         const style = {
-            height: `${this.state.height} px`,
-            width: `${this.state.width} px`
+            width:`${this.state.width}px`,
+            float: 'left',
+            height: `${this.state.height}px`,
+            margin: '10px 10px',
+            position: 'relative'
         }
        return(
-            <div>
-                <div style={style} onMouseEnter={this.handleMouseHover} onMouseLeave={this.handleMouseHover} class="dialog">
+                
+                <div style={style} onMouseEnter={this.handleMouseHover} onMouseLeave={this.handleMouseHover}>
                     {this.state.photo ? this.renderImage() : this.renderUploadImage()}
                 </div>
-            </div>
        )
     }
 }

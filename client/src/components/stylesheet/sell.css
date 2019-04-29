@@ -1,16 +1,25 @@
 .listing{
-    background: wheat;
     margin: 40px;
     border: 1px solid black;
+}
+.imageComponent{
+    width:200px;
+    height: 200px;
+}
+.item{
+    margin: 10px 0;
+    width: 200px;
+    display: inline-block;
 }
 .title{
     font-weight: 300;
     font-size: 32px;
-    background-color: aqua;
+    margin: 20px 0;
+    border-bottom: 0.5px solid black;
 }
 .fields{
-    background-color: cadetblue;
-    margin-top: 0;
+    margin: 20px 0;
+    border-bottom: 0.5px solid black;
 }
 .fieldTitle{
     font-size: 25px;
@@ -42,8 +51,8 @@
     min-height: 200px;
     background-color: white;
     padding: 20px;
-    cursor: pointer;
     margin: 10px 0px;
+    border: 1px solid black;
 }
 .fieldTextBox input{
     height: 10%;
@@ -58,6 +67,7 @@
     padding: 8px;
     box-sizing: border-box;
     background-color: white;
+    border: 0.5px solid black;
     cursor: pointer;
 }
 .subcategorydropdown{
@@ -67,6 +77,7 @@
     padding: 8px;
     box-sizing: border-box;
     background-color: white;
+    border: 0.5px solid black;
     cursor: pointer;
 }
 .sizedropdown{
@@ -77,6 +88,7 @@
     box-sizing: border-box;
     background-color: white;
     cursor: pointer;
+    border: 0.5px solid black;
 }
 .placeholdertext {
     text-align: left;
@@ -86,16 +98,13 @@
     float: right;
 }
 .categorylist{
-    background-color: white;
-    width: 50%;
+    width: 100%;
     padding: 2px;
     margin: 0;
     cursor: pointer;
-
 }
 .sizelist{
-    background-color: white;
-    width: 50%;
+    width: 100%;
     padding: 2px;
     margin: 0;
     cursor: pointer;
@@ -162,23 +171,41 @@ tr{
 .priceinput input{
     text-align: left;
     padding-left: 30px;
+    border: 0.5px solid black;
+}
+.browser-default.item{
+    border: 0.5px solid black;
+}
+.browser-default.autocomplete{
+    border: 0.5px solid black;
+    color: black;
 }
 .priceinput span{
     position: relative;
-    top: -40px;
-    left: 5px;
+    float: left;
+    top: 13px;
+    left: 20px;
     font-size: 18px;
 }
 .browser-default.condition{
     width: 50%;
     margin: 8px 0;
+    border: 1px solid black;
+}
+.browser-default.international{
+    width: 50%;
+    margin: 10px;
+    border: 1px solid black;
+}
+.browser-default.price{
+    width: 50%;
 }
 .gender{
     background-color: white;
     width: 50%;
     padding: 10px;
     margin: 0;
-    border: 0.5px solid #aaa;
+    border: 0.5px solid black;
 }
 .gender li{
     display: inline;
@@ -266,6 +293,9 @@ z-index: 1040;
 }
 .PhotoLink{
     cursor: pointer;
+    font-size: 18px;
+}
+.picture{
 }
 .canvasContainer{
     background-color: #cccccc;
@@ -278,4 +308,37 @@ z-index: 1040;
 .cr-boundary{
     width: 350px;
     height: 350px;
+}
+.browser-default.paypal{
+    border: 1px solid black;
+}
+@media screen and (max-width: 768px){
+    .browser-default.condition{
+        width: 100%;
+    }
+    .browser-default.international{
+        width: 100%;
+        margin: auto;
+    }
+    .browser-default.price{
+        width: 100%;
+    }
+    .gender{
+        width: 100%;
+    }
+    .canvasContainer{
+        width: 100%;
+        margin: auto;
+    }
+    .cr-boundary{
+        width: 100%;
+        margin: auto;
+    }
+    .priceinput span{
+        position: relative;
+        float: left;
+        top: -38px;
+        left: 10px;
+        font-size: 18px;
+    }
 }

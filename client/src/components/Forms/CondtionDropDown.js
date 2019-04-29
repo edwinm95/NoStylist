@@ -20,12 +20,10 @@ class CondtionDropDown extends Component {
     }
   render() {
     return (
-      <div>
           <select onChange={(e) => this.changeValue(e)} className="browser-default condition">
             <option value="" disabled selected>Condtion</option>
             {this.state.condition}
           </select>
-      </div>
     )
   }
 }

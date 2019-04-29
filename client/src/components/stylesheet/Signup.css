@@ -4,6 +4,7 @@
     font-size: 16px;
     width: 100%;
     margin: 8px 0;
+    z-index: inherit;
     cursor: pointer;
     text-transform: none;
 }
@@ -16,6 +17,7 @@
     font-size: 16px;
     width: 100%;
     margin: 8px 0;
+    z-index: inherit;
     cursor: pointer;
     text-transform: none;
 }
@@ -39,6 +41,7 @@
     cursor: pointer;
     text-transform: none;
     margin: 8px 0;
+    z-index: inherit;
 }
 .waves-effect.waves-light.signupbutton:hover{
     background-color: #49C771;

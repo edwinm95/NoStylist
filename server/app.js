@@ -10,7 +10,7 @@ require('./models/Reviews');
 require('./models/Items')
 require('./models/Categories')
 require('./models/Message')
-require('./models/MessageReference')
+require('./models/MessageThread')
 require('./models/SubCategories')
 require('./models/Types')
 require('./models/Sizes')

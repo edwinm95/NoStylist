@@ -5,6 +5,7 @@ import Slider from 'react-slick'
 import { func } from 'prop-types';
 import ThumbNailPhoto from '../Forms/ThumbNailPhoto'
 import ListingDesc from '../Forms/ListingDesc'
+import keys from '../../config/keys'
 
 function CustomRightArrow(props){
     const {className, style, onClick} = props;

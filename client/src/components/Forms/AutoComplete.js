@@ -13,7 +13,7 @@ class AutoComplete extends Component {
           activeSuggestion: 0,
           filteredSuggestions: [],
           showSuggestions: false,
-          userInput: ''
+          userInput: this.props.value
 
       };
       this.onChange = this.onChange.bind(this);
@@ -54,14 +54,14 @@ class AutoComplete extends Component {
   }
   onClick(designer){
       this.setState({
+        userInput: designer.Name,
           activeSuggestion: 0,
           filteredSuggestions: [],
           showSuggestions: false,
-          userInput: designer.Name
       });
       this.props.getDesigner(designer)
 
-  };
+  }
 
   onKeyDown(event){
       const {activeSuggestion, filteredSuggestions} = this.state
@@ -110,7 +110,7 @@ class AutoComplete extends Component {
                                 <li
                                     className={className}
                                     key={designer._id}
-                                    onClick={() => onClick(designer)}
+                                    onClick={(e) => onClick(designer)}
                                 >
                                     {designer.Name}
                                 </li>
@@ -128,12 +128,14 @@ class AutoComplete extends Component {
     }
     return (
       <Fragment>
+                  {console.log(this.state)}
             <input
                 type="text"
                 className="browser-default autocomplete"
                 onChange={onChange}
                 onKeyDown={onKeyDown}
                 value={userInput}
+                placeholder="Enter Designer"
             />
           {suggestionListComponent}
       </Fragment>

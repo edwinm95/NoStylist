@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-
+import styled from 'styled-components'
+import {device} from '../Layout/Device'
 class SubCategoryList extends Component {
     constructor(props){
         super(props);
@@ -62,12 +63,20 @@ class SubCategoryList extends Component {
 
     }
     renderTypes(){
+        const Types = styled.table`
+            width: 25%;
+            background-color: white;
+            border: 1px solid black;
+            @media only screen and ${device.tablet} {
+                width: 50%;
+            }
+        `
         if(this.state.activeSub){
             console.log(this.state.subTypesMaps.get(this.state.activeSub))
             return(
-                <table className="types">
+                <Types>
                     {this.state.subTypesMaps.get(this.state.activeSub)}
-                </table>
+                </Types>
             )
         }else{
             return(
@@ -90,14 +99,30 @@ class SubCategoryList extends Component {
     }
   
     render() {
+        const SubCategoryComponent = styled.div`
+            width: 50%;
+            display: inline;
+            @media only screen and ${device.tablet} {
+                width: 100%;
+            }
+        `
+        const SubCategories = styled.table`
+            width: 25%;
+            background-color: white;
+            float: left;
+            border: 1px solid black;
+            @media only screen and ${device.tablet} {
+                width: 50%;
+            }
+        `
       return (
         <div>
-            <div className="cat">
-                    <table className="subcategories">
+            <SubCategoryComponent>
+                    <SubCategories>
                         {this.state.subcategories}
-                    </table>
+                    </SubCategories>
                         {this.renderTypes()}
-                </div>
+                </SubCategoryComponent>
         </div>
       )
     }

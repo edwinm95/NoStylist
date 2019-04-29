@@ -5,7 +5,6 @@ import Items from '../Layout/Items'
 const Home = () => {
     return(
         <div>
-        <Banner/>
         <Items />
         </div>
     );

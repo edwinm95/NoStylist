@@ -22,9 +22,25 @@ const userSchema = new Schema (
             required: true,
             unique: true
         },
-        name:{
+        profilepicture:{
+            type: String
+        },
+        website:{
+            type: String
+        },
+        country: {
             type: String,
             required: true
+        },
+        name:{
+            firstname:{
+                type: String,
+                required: true
+            },
+            lastname:{
+                type: String,
+                required: true
+            }
         },
         password:{
             type: String,

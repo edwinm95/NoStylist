@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios'
+import styled from 'styled-components'
+import {device} from '../Layout/Device'
 class SizeList extends Component {
   constructor(props){
       super(props)
@@ -25,10 +27,17 @@ class SizeList extends Component {
     this.setState({sizes: array})
   }
   render() {
+    const Sizes = styled.div`
+      border: 0.5px solid black;
+      width: 50%;
+      @media only screen and ${device.tablet} {
+        width: 100%
+      }
+    `
     return (
-      <div>
+      <Sizes>
         {this.state.sizes}
-      </div>
+      </Sizes>
     )
   }
 }

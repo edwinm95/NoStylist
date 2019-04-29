@@ -4,9 +4,12 @@ import { GoogleLogin } from 'react-google-login'
 import { connect } from 'react-redux'
 import FacebookLogin from 'react-facebook-login'
 import Authentication from '../Layout/Authentication'
+import styled from 'styled-components'
 import axios from 'axios'
 import * as actions from '../../actions'
 import keys  from '../../config/keys'
+import {device} from '../Layout/Device'
+import Formsy from 'formsy-react'
 class Signin extends React.Component{
 
     constructor(props){
@@ -93,64 +96,90 @@ class Signin extends React.Component{
             textAlign: 'center',
             fontSize: '32px'
         }
-            return(
-                <div>
-                    <div className="row">
-                    </div>
-                    <div class="row">
-                        <div class="col s4">
-                         </div>
-                        <div class="col s4">
-                            <div className="main-container">
-                                <div className="fixer-container">
-                                    <div className="mainstyle">
-                                        <h1 style={headStyle}>Login to No-Stylist</h1>
-                                        <div className = "socialsignupbutton">
-                                            <FacebookLogin
-                                                appId={keys.facebookClientID}
-                                                autoLoad={false}
-                                                callback={this.facebookResponse}
-                                                fields="name,email"
-                                                cssClass="waves-effect waves-light btn facebook"
-                                                icon="fab fa-facebook-f facebookicon"
-                                            />
+        const SignInContainer = styled.div`
+            width: 25%;
+            postion: absolute;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            left: 0;
+            margin: auto;
+            @media only screen and ${device.tablet} {
+                width: 100%;
+            }
+        `
+        const SocialSignUpButton = styled.div`
+            margin: 30px 30px;
+            border-bottom: 1px solid #eee;
+            border-top: 1px solid #eee;
+        `
+        const UserInputContainer = styled.div`
+            text-align: left;
+            font-size: 14px;
+            color: #ccc;
+            margin: 30px;
+        `
+        const UsernameInput = styled.input`
+            border: 2px solid palevioletred;
+        `
+        const PasswordInput = styled.input`
+            type: "password";
+            name: "password";
 
-                                            <GoogleLogin
-                                                clientId={keys.googleClientID}
-                                                render={renderProps => (
-                                                    <button onClick={renderProps.onClick} className="waves-effect waves-light btn google">
-                                                    <i class="fab fa-google googleicon"></i>Login with Google</button>
-                                                    )}
-                                                onSuccess={this.googleResponse}
-                                                onFailure={this.googleResponse}
-                                            />
-                                        
-                                            <div class="g-signin2" data-onsuccess="onSignIn">
-                                            </div>
-                                        </div>
-                                        <form action="/auth/login" method="post">
-                                            <div className = "userinput">
-                                                Username<br/>
-                                                <input name = 'username' type='text'></input><br/>
-                                                Password<br/>
-                                                <input name= 'password' type='password'></input><br/>
-                                            </div>
-                                            <div className = "signupbuttoncontainer">
-                                                <input type="submit" className="waves-effect waves-light btn signupbutton" value = "Sign In" />
-                                            </div>
-                                        </form>
-                                    </div>
-                                    <div className = "loginstyle">
-                                        No account? <Link to={"/SignUp"} >Sign up</Link>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col s4">
-                            </div>
-                        </div>    
-                    </div>
-                </div>
-            );
+        `
+        const LoginLinkComponent = styled.div`
+            align: left;
+            text-align: center;
+            padding: 14px;
+            font-size: 14px;
+        `
+        const SigninButtonContainer = styled.div`
+            margin: 30px 30px;
+        `
+
+        return(
+            <div>
+                <SignInContainer>
+                    <h1 style={headStyle}>Login to No-Stylist</h1>
+                    <SocialSignUpButton>
+                        <FacebookLogin
+                            appId={keys.facebookClientID}
+                            autoLoad={false}
+                            callback={this.facebookResponse}
+                            fields="name,email"
+                            cssClass="waves-effect waves-light btn facebook"
+                            icon="fab fa-facebook-f facebookicon"
+                        />
+                        <GoogleLogin
+                            clientId={keys.googleClientID}
+                            render={renderProps => (
+                                <button onClick={renderProps.onClick} className="waves-effect waves-light btn google">
+                                <i class="fab fa-google googleicon"></i>Login with Google</button>
+                                )}
+                            onSuccess={this.googleResponse}
+                            onFailure={this.googleResponse}
+                        />
+                        <div class="g-signin2" data-onsuccess="onSignIn">
+                        </div>
+                    </SocialSignUpButton>
+                    <form action="/auth/login" method="post">
+                        <UserInputContainer>
+                            Username<br/>
+                            <UsernameInput type="text" name="username"/>
+                            Password<br/>
+                            <PasswordInput type="password" name="password"/>
+                        </UserInputContainer>
+                        <SigninButtonContainer>
+                            <button type="submit" className="waves-effect waves-light btn signupbutton">Submit</button>
+                        </SigninButtonContainer>
+                    </form>
+                    <LoginLinkComponent>
+                        No account? <Link to={"/SignUp"} >Sign up</Link>
+                    </LoginLinkComponent>
+                </SignInContainer>
+
+            </div>
+        );
     }
 
     render(){

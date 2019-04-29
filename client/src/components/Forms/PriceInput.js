@@ -6,10 +6,9 @@ class PriceInput extends Component{
         this.changeValue = this.changeValue.bind(this)
     }
     changeValue(event){
-        var reg = /^$|^\d+$/;
+        var reg = /^\d+(\.\d{1,3})?$/;
         var string = event.currentTarget.value
         if(string.match(reg)){
-            console.log('Matches ',string)
             this.props.setValue(string)
         }
     }
@@ -21,7 +20,7 @@ class PriceInput extends Component{
                   id={this.props.id || ''}
                   type={this.props.type || 'text'}
                   value={this.props.getValue() || ''}
-                  className={this.props.className || 'browser-default'}
+                  className={this.props.className || 'browser-default price'}
                   accept={this.props.accept}
                   placeholder={this.props.placeholder}
                 ></input>

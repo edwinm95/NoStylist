@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios'
+import styled from 'styled-components'
+import {device} from '../Layout/Device'
 class CategoryList extends Component {
 
   constructor(props){
@@ -54,17 +56,28 @@ class CategoryList extends Component {
     }
   }
   renderCategory(){
+    const CategoryListComponent = styled.div`
+        border: 0.5px solid black;
+        width: 50%;
+        @media only screen and ${device.tablet} {
+            width: 100%;
+        }
+    `
+    const style = {
+        border: '0.5px solid black',
+        width: '50%'
+    }
       if(this.state.active === 'male'){
           return(
-              <div>
+              <CategoryListComponent> 
                   {this.state.mencategory}
-              </div>
+              </CategoryListComponent>
           )
       }else if (this.state.active === 'female'){
           return(
-              <div>
+              <CategoryListComponent>
                   {this.state.womencategory}
-              </div>
+              </CategoryListComponent>
           )
       }
   }
@@ -86,12 +99,32 @@ class CategoryList extends Component {
   }
 
   render() {
+    const GenderComponent = styled.ul`
+        background-color: white;
+        width: 50%;
+        padding: 10px;
+        margin: 0;
+        border: 0.5px solid black;
+        @media only screen and ${device.tablet} {
+            width: 100%;
+        }
+    `
+    const Gender = styled.li`
+        display: inline;
+        padding: 10px 10px;
+        margin: 10px;
+        cursor: pointer;
+        &:hover{
+            font-weight: 600;
+            border-bottom: 2px solid red;
+        }
+    `
     return (
       <div>
-            <ul className="gender">
-                <li onClick={() => this.changeStyle("male")} style={this.state.menStyle}>Male</li>
-                <li onClick={() => this.changeStyle("female")} style={this.state.womenStyle}>Female</li>
-            </ul>
+            <GenderComponent>
+                <Gender onClick={() => this.changeStyle("male")} style={this.state.menStyle}>Male</Gender>
+                <Gender onClick={() => this.changeStyle("female")} style={this.state.womenStyle}>Female</Gender>
+            </GenderComponent>
           {this.renderCategory()}    
       </div>
     )

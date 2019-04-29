@@ -8,7 +8,9 @@ import * as actions from '../../actions'
 import axios from 'axios'
 import MyInput from '../Forms/MyInput'
 import Formsy from 'formsy-react'
-import keys from '../../config/keys';
+import keys from '../../config/keys'
+import styled from 'styled-components'
+import {device} from '../Layout/Device'
 class SignUp extends Component {
     constructor(props){
         super(props);
@@ -128,76 +130,84 @@ class SignUp extends Component {
         const facebook = this.props.facebook;
         const google = this.props.google;
         const usernameEmpty = this.state.usernameisEmpty
-        const main = {
-            textAlign: 'center',
-            borderStyle: 'solid',
-            borderWidth: '1px'
-        }
     
-        const headStyle = {
-            textAlign: 'center',
-            fontSize: '32px'
-        }
-            return(
-                <div>
-                <div className="row">
-                </div>
-                <div class="row">
-                    <div class="col s4">
-                    </div>
-                    <div class="col s4">
-                        <div className="main-container">
-                            <div className="fixer-container">
-                                <div className="mainstyle">
-                                    <h1 style={headStyle}>Join No-Stylist Community</h1>
-                                    <div className = "socialsignupbutton">
-                                    <FacebookLogin
-                                            appId={keys.facebookClientID}
-                                            autoLoad={false}
-                                            callback={this.facebookResponse}
-                                            textButton="Sign Up with Facebook"
-                                            fields="name,email"
-                                            cssClass="waves-effect waves-light btn facebook"
-                                            icon="fab fa-facebook-f facebookicon"
-                                        />
-                                    <GoogleLogin
-                                        clientId={keys.googleClientID}
-                                        render={renderProps => (
-                                            <button onClick={renderProps.onClick} className="waves-effect waves-light btn google">
-                                            <i class="fab fa-google googleicon"></i>Sign Up with Google</button>
-                                            )}
-                                        buttonText="Login in with google"
-                                        onSuccess={this.googleResponse}
-                                        onFailure={this.googleResponse}
-                                    />
-                                    </div>
-                                    <Formsy onValidSubmit={this.handleSubmit}>
-                                    <div className = "userinput">
-                                        First and Last Name<br/>
-                                        <MyInput name = 'name' type='text' validations="isUndefined" validationError="Please enter a name" ></MyInput><br/>
-                                        Username<br/>
-                                        <MyInput name = 'username' type='text' validations="isEmptyString" validationError="Please enter a username" ></MyInput><br/>
-                                        Email Address<br/>
-                                        <MyInput name = 'email'type='email' validations="isEmail" validationError="This is not a valid email"></MyInput><br/>
-                                        Password<br/>
-                                        <MyInput name= 'password' type='password' validations="isEmptyString" validationError="Please enter a password" ></MyInput><br/>
-                                    </div>
-                                    <div className = "signupbuttoncontainer">
-                                        <input type="submit" className="waves-effect waves-light btn signupbutton" value = "Sign Up" />
-                                    </div>
-                                    </Formsy>
-                                </div>
-                                <div className = "loginstyle">
-                                    Already a member?<Link to={"/Signin"} > Sign in</Link>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col s4">
-                    </div>
-                </div>
+        const SignUpContainer = styled.div`
+            width: 25%;
+            margin auto;
+            @media only screen and ${device.tablet} {
+                width: 100%;
+            }
+        `
+        const Header = styled.div`
+            text-align: center;
+            margin: 30px 0;
+            font-size: 32px
+        `
+        const SocialSignUpButtonContainer = styled.div`
+            margin: 0 30px;
+            border-bottom: 1px solid #eee;
+            border-top: 1px solid #eee;
+        `
+        const UserInputContainer = styled.div`
+            text-align: left;
+            color: #B2BABB;
+            margin: 30px;
+        `
+        const SignUpButtonContainer = styled.div`
+            margin: 0 30px;
+        `
+        const LoginLinkContainer = styled.div`
+            margin: 30px 30px;
+            text-align: center;
+            font-size: 14px;
+            padding: 14px;
+        `
+        return(
+            <div>
+                <SignUpContainer>
+                    <Header>Join No-Stylist Community</Header>
+                    <SocialSignUpButtonContainer>
+                    <FacebookLogin
+                            appId={keys.facebookClientID}
+                            autoLoad={false}
+                            callback={this.facebookResponse}
+                            textButton="Sign Up with Facebook"
+                            fields="name,email"
+                            cssClass="waves-effect waves-light btn facebook"
+                            icon="fab fa-facebook-f facebookicon"
+                        />
+                    <GoogleLogin
+                        clientId={keys.googleClientID}
+                        render={renderProps => (
+                            <button onClick={renderProps.onClick} className="waves-effect waves-light btn google">
+                            <i class="fab fa-google googleicon"></i>Sign Up with Google</button>
+                            )}
+                        buttonText="Login in with google"
+                        onSuccess={this.googleResponse}
+                        onFailure={this.googleResponse}
+                    />
+                </SocialSignUpButtonContainer>
+                <Formsy onValidSubmit={this.handleSubmit}>
+                    <UserInputContainer>
+                        First and Last Name<br/>
+                        <MyInput name = 'name' type='text' validations="isExisty" validationError="Please enter a name" required></MyInput><br/>
+                        Username<br/>
+                        <MyInput name = 'username' type='text' validations="isExisty" validationError="Please enter a username" ></MyInput><br/>
+                        Email Address<br/>
+                        <MyInput name = 'email'type='email' validations="isEmail" validationError="This is not a valid email"></MyInput><br/>
+                        Password<br/>
+                        <MyInput name= 'password' type='password' validations="isEmptyString" validationError="Please enter a password" ></MyInput><br/>
+                    </UserInputContainer>
+                    <SignUpButtonContainer>
+                        <button type="submit" className="waves-effect waves-light btn signupbutton" value = "Sign Up" >Sign Up</button>
+                    </SignUpButtonContainer>
+                </Formsy>
+                <LoginLinkContainer>
+                    Already a member?<Link to={"/Signin"} > Sign in</Link>
+                </LoginLinkContainer>
+                </SignUpContainer>
             </div>
-            );
+        );
     }
     render(){
         if(this.state.showAuthenticationForm === false){
